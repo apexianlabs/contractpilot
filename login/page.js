@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-const GOOGLE_AUTH_URL = `https://wdeilbhnsdlmckovicqy.supabase.co/auth/v1/authorize?provider=google&redirect_to=https%3A%2F%2Fapp.contractpilot.io%2Fauth%2Fcallback&scopes=email+profile`
+const GOOGLE_AUTH_URL = `https://wdeilbhnsdlmckovicqy.supabase.co/auth/v1/authorize?provider=google&redirect_to=https%3A%2F%2Fapp.clarityiq.app%2Fauth%2Fcallback&scopes=email+profile`
 
 export default function LoginPage() {
   const router = useRouter()
@@ -64,10 +64,8 @@ export default function LoginPage() {
     <div style={{width:420,flexShrink:0,background:'#0f172a',display:'flex',flexDirection:'column',padding:'40px',position:'relative',overflow:'hidden'}}>
       <div style={{position:'absolute',top:-80,right:-60,width:280,height:280,borderRadius:'50%',background:'rgba(255,255,255,0.08)'}}/>
       <Link href="/" style={{display:'flex',alignItems:'center',gap:10,marginBottom:48,zIndex:1,textDecoration:'none'}}>
-        <div style={{width:36,height:36,borderRadius:8,background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:18,fontWeight:800,color:'#fff'}}>
-          C
-        </div>
-        <span style={{fontSize:20,fontWeight:800,color:'#fff'}}>ContractPilot</span>
+        <div style={{width:36,height:36,borderRadius:8,background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:18,fontWeight:800,color:'#fff'}}>C</div>
+        <span style={{fontSize:20,fontWeight:800,color:'#fff'}}>ClarityIQ</span>
       </Link>
       <div style={{zIndex:1,marginBottom:40}}>
         <h1 style={{fontSize:28,fontWeight:800,color:'#fff',lineHeight:1.2,marginBottom:12}}>
@@ -76,7 +74,7 @@ export default function LoginPage() {
         <p style={{fontSize:14,color:'rgba(255,255,255,0.7)',lineHeight:1.6}}>Understand any contract in 60 seconds</p>
       </div>
       <div style={{zIndex:1,marginTop:'auto',background:'rgba(255,255,255,0.1)',borderRadius:12,padding:20,border:'1px solid rgba(255,255,255,0.15)'}}>
-        <p style={{fontSize:13,color:'rgba(255,255,255,0.9)',lineHeight:1.6,marginBottom:10,fontStyle:'italic'}}>"ContractPilot saves me hours every week."</p>
+        <p style={{fontSize:13,color:'rgba(255,255,255,0.9)',lineHeight:1.6,marginBottom:10,fontStyle:'italic'}}>"ClarityIQ saves me hours every week."</p>
         <p style={{fontSize:12,color:'rgba(255,255,255,0.6)',fontWeight:500}}>— Beta User</p>
       </div>
     </div>
@@ -92,7 +90,7 @@ export default function LoginPage() {
           {isMobile && (
             <Link href="/" style={{display:'flex',alignItems:'center',gap:8,marginBottom:24,textDecoration:'none',justifyContent:'center'}}>
               <div style={{width:32,height:32,borderRadius:8,background:'#0f172a',display:'flex',alignItems:'center',justifyContent:'center',fontSize:14,fontWeight:800,color:'#fff'}}>C</div>
-              <span style={{fontWeight:800,fontSize:18,color:'#0f172a'}}>ContractPilot</span>
+              <span style={{fontWeight:800,fontSize:18,color:'#0f172a'}}>ClarityIQ</span>
             </Link>
           )}
           <div style={{display:'flex',background:'#f1f5f9',borderRadius:10,padding:4,marginBottom:24}}>
@@ -110,7 +108,7 @@ export default function LoginPage() {
             {tab === 'login' ? 'Welcome back' : 'Create your account'}
           </h2>
           <p style={{fontSize:14,color:'#64748b',marginBottom:20}}>
-            {tab === 'login' ? `Sign in to your ContractPilot account.` : 'Start your free trial today.'}
+            {tab === 'login' ? `Sign in to your ClarityIQ account.` : 'Start your free trial today.'}
           </p>
           {error && <div style={{background:'#fef2f2',border:'1px solid #fecaca',borderRadius:8,padding:'10px 14px',fontSize:13,color:'#dc2626',marginBottom:16}}>{error}</div>}
           {tab === 'signup' && (

@@ -17,7 +17,7 @@ export async function GET(request) {
     const stripeData = await stripeRes.json()
     const invoices = (stripeData.data || []).filter(i => i.status !== 'draft').map(inv => ({
       date: new Date(inv.created * 1000).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),
-      desc: inv.lines?.data?.[0]?.description || 'ContractPilot subscription',
+      desc: inv.lines?.data?.[0]?.description || 'ClarityIQ subscription',
       amount: `$${(inv.amount_paid/100).toFixed(2)}`,
       status: inv.status === 'paid' ? 'Paid' : inv.status,
       pdf: inv.invoice_pdf

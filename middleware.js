@@ -8,7 +8,7 @@ export function middleware(request) {
     return NextResponse.next()
   }
 
-  if (hostname === 'app.contractpilot.io') {
+  if (hostname === 'app.clarityiq.app') {
     if (pathname === '/') {
       const token = request.cookies.get('con_token')?.value
       if (token) {
@@ -20,11 +20,11 @@ export function middleware(request) {
     return NextResponse.next()
   }
 
-  if (hostname === 'contractpilot.io' || hostname === 'www.contractpilot.io') {
+  if (hostname === 'clarityiq.app' || hostname === 'www.clarityiq.app') {
     if (pathname.startsWith('/dashboard') || pathname.startsWith('/billing') ||
         pathname.startsWith('/generate') || pathname.startsWith('/login') ||
         pathname.startsWith('/signup')) {
-      return NextResponse.redirect(new URL('https://app.contractpilot.io' + pathname, request.url))
+      return NextResponse.redirect(new URL('https://app.clarityiq.app' + pathname, request.url))
     }
   }
 
