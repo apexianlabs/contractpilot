@@ -1,29 +1,40 @@
 import { NextResponse } from 'next/server'
+
+const AI_API_URL = process.env.AI_API_URL
+const AI_API_KEY = process.env.AI_API_KEY
+const DB_API_URL = process.env.DB_API_URL
+const DB_API_KEY = process.env.DB_API_KEY_CONTRACTPILOT
+
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { contract_text, reviewer_role, userId } = body
-    if (!contract_text) return NextResponse.json({ error: 'Contract text is required' }, { status: 400 })
-    const aiRes = await fetch(`${process.env.AI_API_URL}/api/process`, {
+    const { userId, ...inputs } = body
+
+    // Call AI API
+    const aiRes = await fetch(`${AI_API_URL}/api/process`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.AI_API_KEY}` },
-      body: JSON.stringify({ task: 'analyse_contract', inputs: { contract_text, reviewer_role: reviewer_role||'Freelancer' } })
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${AI_API_KEY}` },
+      body: JSON.stringify({ task: 'analyse_contract', inputs })
     })
     const aiData = await aiRes.json()
-    if (!aiRes.ok) throw new Error(aiData.error || 'AI failed')
+    if (!aiRes.ok) throw new Error(aiData.error || 'AI generation failed')
+
     const result = aiData.data
+
+    // Save to DB
     let itemId = null
-    if (userId && process.env.DB_API_URL) {
+    if (userId && DB_API_URL) {
       try {
-        const dbRes = await fetch(`${process.env.DB_API_URL}/db/contractpilot/analyses`, {
+        const dbRes = await fetch(`${DB_API_URL}/db/contractpilot/analyses`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.DB_API_KEY_CONTRACTPILOT}` },
-          body: JSON.stringify({ user_id: userId, title: `Contract Analysis — ${new Date().toLocaleDateString()}`, reviewer_role, result_data: result, status: 'complete' })
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${DB_API_KEY}` },
+          body: JSON.stringify({ user_id: userId, result_data: result, status: 'complete', ...inputs })
         })
         const dbData = await dbRes.json()
         itemId = dbData.data?.id || null
-      } catch(e) {}
+      } catch(e) { console.error('DB save failed:', e.message) }
     }
+
     return NextResponse.json({ itemId, result })
   } catch(err) {
     return NextResponse.json({ error: err.message }, { status: 500 })
