@@ -52,6 +52,16 @@ export default function LoginPage() {
       } catch(e) {}
       document.cookie = `con_token=${token}; path=/; max-age=2592000; SameSite=Lax`
       document.cookie = `con_user=${encodeURIComponent(JSON.stringify({ id: user.id, email: user.email, name: fullName }))}; path=/; max-age=2592000; SameSite=Lax`
+      
+      // Send welcome email on signup
+      if (tab === 'signup') {
+        fetch(`${process.env.NEXT_PUBLIC_DB_API_URL}/email/welcome`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DB_API_KEY}` },
+          body: JSON.stringify({ product: 'contractpilot', to: form.email, name: fullName, email: form.email })
+        }).catch(() => {}) // fire and forget
+      }
+      
       router.push('/dashboard')
     } catch(err) {
       setError('Authentication failed: ' + err.message)
