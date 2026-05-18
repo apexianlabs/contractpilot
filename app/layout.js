@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'ClarityIQ — Understand any contract in 60 seconds',
-  description: 'Understand any contract in 60 seconds',
+  title: 'ClarityIQ — Paste any contract and get a plain-English breakdown of risks, obligations, and red flags.',
+  description: 'Paste any contract and get a plain-English breakdown of risks, obligations, and red flags.',
 }
 export default function RootLayout({ children }) {
   return (
