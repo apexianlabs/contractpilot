@@ -30,6 +30,7 @@ function GeneratePageInner() {
         body: JSON.stringify({ ...form, userId: user?.id })
       })
       const data = await res.json()
+      if (res.status === 402) { setError('limit_reached'); setLoading(false); return }
       if (!res.ok) throw new Error(data.error || 'Generation failed')
       setResult(data)
     } catch(e) {
@@ -53,7 +54,17 @@ function GeneratePageInner() {
         <h1 style={{fontSize:26,fontWeight:800,color:'#0f172a',marginBottom:6}}>Analyse a contract</h1>
         <p style={{fontSize:14,color:'#64748b',marginBottom:28}}>Paste contract text to get a plain-English breakdown.</p>
 
-        {error && <div style={{background:'#fef2f2',border:'1px solid #fecaca',borderRadius:10,padding:'12px 16px',fontSize:13,color:'#dc2626',marginBottom:20}}>{error}</div>}
+        {error && error !== 'limit_reached' && <div style={{background:'#fef2f2',border:'1px solid #fecaca',borderRadius:10,padding:'12px 16px',fontSize:13,color:'#dc2626',marginBottom:20}}>{error}</div>}
+        {error === 'limit_reached' && (
+          <div style={{background:'#fafafa',border:`2px solid #0f172a`,borderRadius:14,padding:24,marginBottom:20,textAlign:'center'}}>
+            <p style={{fontSize:28,marginBottom:8}}>🚀</p>
+            <p style={{fontSize:16,fontWeight:800,color:'#0f172a',marginBottom:6}}>You've used your 3 free generations</p>
+            <p style={{fontSize:13,color:'#64748b',marginBottom:20,lineHeight:1.6}}>Upgrade to Starter for 50/month, or Pro for unlimited generations. Resets on the 1st of each month.</p>
+            <a href="/billing" style={{display:'inline-block',background:'#0f172a',color:'#fff',padding:'11px 28px',borderRadius:9,textDecoration:'none',fontWeight:700,fontSize:14}}>
+              Upgrade now →
+            </a>
+          </div>
+        )}
 
         {result ? (
           <div style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:12,padding:24}}>
