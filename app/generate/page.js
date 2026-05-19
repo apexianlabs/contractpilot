@@ -56,13 +56,29 @@ function GeneratePageInner() {
 
         {error && error !== 'limit_reached' && <div style={{background:'#fef2f2',border:'1px solid #fecaca',borderRadius:10,padding:'12px 16px',fontSize:13,color:'#dc2626',marginBottom:20}}>{error}</div>}
         {error === 'limit_reached' && (
-          <div style={{background:'#fafafa',border:`2px solid #0f172a`,borderRadius:14,padding:24,marginBottom:20,textAlign:'center'}}>
+          <div style={{background:'#fafafa',border:'2px solid #0f172a',borderRadius:14,padding:24,marginBottom:20,textAlign:'center'}}>
             <p style={{fontSize:28,marginBottom:8}}>🚀</p>
-            <p style={{fontSize:16,fontWeight:800,color:'#0f172a',marginBottom:6}}>You've used your 3 free generations</p>
-            <p style={{fontSize:13,color:'#64748b',marginBottom:20,lineHeight:1.6}}>Upgrade to Starter for 50/month, or Pro for unlimited generations. Resets on the 1st of each month.</p>
-            <a href="/billing" style={{display:'inline-block',background:'#0f172a',color:'#fff',padding:'11px 28px',borderRadius:9,textDecoration:'none',fontWeight:700,fontSize:14}}>
-              Upgrade now →
-            </a>
+            <p style={{fontSize:16,fontWeight:800,color:'#0f172a',marginBottom:6}}>You've reached your free limit</p>
+            <p style={{fontSize:13,color:'#64748b',marginBottom:16,lineHeight:1.6}}>You've used all 3 free generations this month. Upgrade to continue.</p>
+            <div style={{background:'#f1f5f9',borderRadius:8,padding:'10px 16px',marginBottom:16,textAlign:'left'}}>
+              <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#64748b',marginBottom:6}}>
+                <span>Free plan usage</span><span>3 / 3 used</span>
+              </div>
+              <div style={{background:'#e2e8f0',borderRadius:4,height:6}}>
+                <div style={{background:'#0f172a',borderRadius:4,height:6,width:'100%'}}/>
+              </div>
+            </div>
+            <div style={{display:'flex',gap:10,justifyContent:'center'}}>
+              <button onClick={() => setError('')}
+                style={{padding:'10px 20px',borderRadius:8,border:'1px solid #e2e8f0',background:'#fff',fontSize:14,color:'#64748b',cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+                Maybe later
+              </button>
+              <a href="/billing"
+                style={{padding:'10px 20px',borderRadius:8,border:'none',background:'#0f172a',color:'#fff',fontSize:14,fontWeight:700,textDecoration:'none',display:'inline-flex',alignItems:'center'}}>
+                Upgrade now →
+              </a>
+            </div>
+            <p style={{fontSize:11,color:'#94a3b8',marginTop:12}}>Resets June 1st · No credit card needed for free plan</p>
           </div>
         )}
 
