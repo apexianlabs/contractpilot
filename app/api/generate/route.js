@@ -11,6 +11,24 @@ export async function POST(request) {
     const { userId, contract_text, reviewer_role } = body
 
     // Call AI API
+
+    // Check usage limits
+    if (userId) {
+      const usageRes = await fetch(`${process.env.DB_API_URL}/usage/check?user_id=${userId}&product=contractpilot`, {
+        headers: { 'Authorization': `Bearer ${process.env.DB_API_KEY_CONTRACTPILOT}` }
+      })
+      const usage = await usageRes.json()
+      if (!usage.allowed) {
+        return NextResponse.json({
+          error: 'limit_reached',
+          message: `You've used all ${usage.limit} free generations this month. Upgrade to continue.`,
+          used: usage.used,
+          limit: usage.limit,
+          upgrade_url: '/billing'
+        }, { status: 402 })
+      }
+    }
+
     const aiRes = await fetch(`${AI_API_URL}/api/process`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${AI_API_KEY}` },
@@ -20,6 +38,16 @@ export async function POST(request) {
     if (!aiRes.ok) throw new Error(aiData.error || 'AI generation failed')
 
     const result = aiData.data
+
+    // Track usage
+    if (userId) {
+      fetch(`${process.env.DB_API_URL}/usage/track`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.DB_API_KEY_CONTRACTPILOT}` },
+        body: JSON.stringify({ user_id: userId, product: 'contractpilot', action: 'generate' })
+      }).catch(() => {})
+    }
+
 
     // Save to DB
     let itemId = null
