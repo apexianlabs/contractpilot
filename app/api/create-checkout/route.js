@@ -30,7 +30,7 @@ export async function POST(request) {
       'subscription_data[metadata][user_id]': userId,
       'subscription_data[metadata][product]': 'contractpilot',
       'subscription_data[metadata][plan]': plan,
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/billing?success=1`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?upgraded=true`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/billing`,
       customer_email: userEmail,
     })
