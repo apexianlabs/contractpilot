@@ -15,9 +15,7 @@ export default function DashboardPage() {
   
   const fetchUsage = async (userId) => {
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_DB_API_URL + '/usage/check?user_id=' + userId + '&product=contractpilot', {
-        headers: { 'Authorization': 'Bearer ' + process.env.NEXT_PUBLIC_DB_API_KEY }
-      })
+      const res = await fetch('/api/usage?user_id=' + userId)
       const data = await res.json()
       setUsageData(data)
     } catch(e) {}
