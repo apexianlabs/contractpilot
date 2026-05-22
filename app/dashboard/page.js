@@ -76,7 +76,7 @@ useEffect(() => {
   const recentItems = items.slice(0, 6)
 
   const Sidebar = () => (
-    <div style={{width:220,background:'#0f172a',display:'flex',flexDirection:'column',minHeight:'100vh',flexShrink:0,position:'relative'}}>
+    <div style={{width:'min(220px,80vw)',background:'#0f172a',display:'flex',flexDirection:'column',minHeight:'100vh',flexShrink:0,position:'relative'}}>
 
         {usageData && usageData.plan === 'free' && (
           <div style={{background:'#fff',border:'1px solid #e2e8f0',borderRadius:12,padding:16,marginBottom:16}}>
