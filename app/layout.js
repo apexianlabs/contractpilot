@@ -1,4 +1,5 @@
 export const metadata = {
+  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
   title: 'ClarityIQ — Paste any contract and get a plain-English breakdown of risks, obligations, and red flags.',
   description: 'Paste any contract and get a plain-English breakdown of risks, obligations, and red flags.',
 }
